@@ -42,10 +42,10 @@ https://fastx.divms.uiowa.edu:3443/  <br/>
 *  We will use FSL's `bet` tool (**b**rain **e**xtraction **t**ool) to strip away skull
    *  Type `fsl`
    *  Click this button: ![bet-button](images/download-and-prepare_bet-button.png)
-* Suggested `bet` settings**: <br/>
+* **Suggested `bet` settings**: <br/>
    *  File paths for input and output images, note you should change `username` below to your hawkid!
         *  Input image: `/mnt/nfs/clasnetappvm/homedirs/username/fmriLab/data/bids/sub-001/anat/sub-001_T1w.nii.gz`
-        *  Output image: `/mnt/nfs/clasnetappvm/homedirs/username/fmriLab/data/bids/derivatives/sub-001/anat/sub-001_T1w.nii.gz`
+        *  Output image: `/mnt/nfs/clasnetappvm/homedirs/username/fmriLab/data/bids/derivatives/sub-001/anat/sub-001_T1w_brain.nii.gz`
    *  Set `fractional intensity threshold` to .4
    *  Use drop-down menu for `bet` pre-baked settings to select `Robust brain centre estimation (iterates bet2 several times)`
    *  Select `Output binary brain mask image` (should appear yellow box when selected)
@@ -98,9 +98,7 @@ https://fastx.divms.uiowa.edu:3443/  <br/>
 
 **Registration tab in FEAT GUI:**<br/>
 *  Select `Main structural image` to open that window
-*  Setup yours as shown below, with your `T1w_brain` image as the main structural image, and change search options to `Full search` and `12 DOF` <br/>
-
-![feat-registration-setup](images/preprocessing_feat-registration-setup.png)
+*  Set your skull-stripped `T1w_brain` image as the main structural image, and change search options to `Full search` and `12 DOF` <br/>
 
 
 **When you've set registration, click `Go`** <br/>
