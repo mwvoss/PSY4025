@@ -1,4 +1,4 @@
-# Hands on Lab session #1, resting-state functional connectivity
+# Hands on Practical for Resting-state Functional Connectivity
 
 For this hands on lab practice, we will be using data from sub-001 that you downloaded and processed for the previous block. \
 
