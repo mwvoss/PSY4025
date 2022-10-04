@@ -75,36 +75,34 @@ x=34 (top row), y=-12 (middle row), z=24 (lower row)
 ![](images/practical-rsfc_rmot-coords.png)
 
 
-- We will now create an ROI mask around that coordinate. In the terminal, do
+- We will now create an ROI mask around that coordinate. In the terminal (still in `rest.feat`), do
   - `fslmaths filtered_func_data.nii.gz -mul 0 -add 1 -roi 21 1 32 1 26 1 0 1 right_motor -odt float`
-  - `fslmaths filtered_func_data.nii.gz -mul 0 -add 1 -roi 37 1 27 1 16 1 0 1 left_LGN -odt float`
-
   - `fslmaths right_motor.nii.gz -kernel sphere 5 -fmean right_motor -odt float`
-  - `fslmaths left_LGN.nii.gz -kernel sphere 5 -fmean left_LGN -odt float`
-  - Remember, these commands will only work if you are in the directory where these files are saved.
-- Use the skills your learned and check the anatomical location of right_motor.nii.gz file that you just created.
+  - Use the skills your learned and check the anatomical location of right_motor.nii.gz file that you just created.
 
 - Extract time-series from right_motor from the low-pass filetered data, do: \
 `fslmeants -i filtered_func_data.nii.gz -o right_motor.txt -m right_motor.nii.gz`
-`fslmeants -i filtered_func_data.nii.gz -o left_LGN.txt -m left_LGN.nii.gz`
+
 
 ## Step 3. Run the functional connectivity analysis using FEAT. Inputing the seed time-series as the regressor
 
-- In the terminal, do: `cd ~/fmriLab/data/bids/sub-001/`
+- In the terminal, move to where your `rest.feat` output is, do: `cd ~/fmriLab/data/bids/derivatives/sub-001/func/`
 - Start `fsl`, open `FEAT`
 - Change `Full analysis` to `Statistics`
-- Click Input is a FEAT directory, select the `rest.feat` folder as input.
-- Click Stats tab. Change `Don't add Motion Parameters` to `Standard + Extended Motion Parameters`
-![](Data/feat4.png)
+- Click Input is a FEAT directory, and select the `rest.feat` folder as input.
+- Click Stats tab. Keep `Don't add Motion Parameters` 
+
 
 - Click Full model setup
   - In EV name, enter "right motor"
   - Change `Basic shape` to `Custom (1 entry per volume)`
   - In Filename, click the folder icon and select `right_motor.txt`
   - Change `Convolution` to `None`, and unclick Add temporal derivative and Apply temporal filtering
-![](Data/feat5.png)
-- View the design, then hit Go.
+  ![](images/practical-rsfc_tab-stats.png)
+
+- View the design, what is this? 
+- Close the design image and Hit Go!
 - Inspect progress in the FEAT report html page.
 - In the terminal, launch `fsleyes again`, we will load both the `reg/highres` and the `rendered_thresh_zstat1.nii.gz` images.
 - After loading the `rendered_thresh_zstat1`, we can change both the colorbar and the min threshold to examine regions that show strong functional connectivity with our right motor seed.
-![](Data/fsleye4.png)
+![](images/practical-rsfc_fsleyes-rmot-map.png)
