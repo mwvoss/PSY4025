@@ -6,7 +6,7 @@ They should be located at `$HOME/fmriLab/data/`, and you should be able to navig
 
 You should also have the "skull-striped T1 image" saved under `$HOME/fmriLab/data/bids/derivatives/sub-001/anat/` \
 
-If not, please follow the instructions and redo the steps described here: https://github.com/mwvoss/MRI-lab-classes/blob/master/PSY4025-2020-FA2020/practical_download-and-prepare-class-data.md
+If not, please follow the instructions and redo the steps described here: https://github.com/mwvoss/PSY4025/blob/master/practical_preprocessing-bet-and-feat.md
 
 
 ## What you will learn from this lab practice
@@ -32,20 +32,22 @@ We will use the steps you learned from last block to preprocess the resting-stat
         - Select `sub-001-task-rest_bold.nii.gz` as input 4D. 
         - Set output to `~/fmriLab/data/bids/derivatives/sub-001/func/rest.feat`
         - We will delete the first 4 volumes in `Delete volumes`
-    ![](images/practical-rsfc_tab-data.png)
+        - Leave the High pass filter cutoff (s) to 100s
+ ![](images/practical-rsfc_tab-data.png)
 
     - Go to the Pre-stats tab. We will do the following preprocessing
         - Motion correction with `MCFLIRT`
         - Select `BET`
         - Spatial smoothing of 6 mm
         - select `Highpass`
-    ![](Data/feat2.png)
+    ![](images/practical-rsfc_tab-prestats.png)
 
     - Go to the Registration tab, do the following:
         - Select `Main Structural Image`
-        - Select the "brain extracted" T1 as the main structural image, change to normal search and 7 DOF. Remember the brain extracted T1 is located in the anat folder.
-    - Change to normal search and 12 DOF for Standard space
-    ![](Data/feat3.png)
+        - Select the "brain extracted" T1 as the main structural image (remember this is in the derivatives folder!)
+        - Change to normal search and 12 DOF
+        - For standard space, change to normal search and 12 DOF 
+    ![](images/practical-rsfc_tab-registration.png)
 
 - Hit Go!
 
