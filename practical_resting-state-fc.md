@@ -33,7 +33,7 @@ We will use the steps you learned from last block to preprocess the resting-stat
         - Set output to `~/fmriLab/data/bids/derivatives/sub-001/func/rest.feat`
         - We will delete the first 4 volumes in `Delete volumes`
         - Leave the High pass filter cutoff (s) to 100s
- ![](images/practical-rsfc_tab-data.png)
+    ![](images/practical-rsfc_tab-data.png)
 
     - Go to the Pre-stats tab. We will do the following preprocessing
         - Motion correction with `MCFLIRT`
@@ -52,30 +52,29 @@ We will use the steps you learned from last block to preprocess the resting-stat
 - Hit Go!
 
 - We then need to manually do "low-pass" filter. That is because FEAT does not support it (only does highpass). We have to do it via command line in the terminal.
-  - Now open the terminal, go back to the FEAT output folder in `~/fmriLab/data/bids/sub-001/rest.feat`
-by doing
-`cd ~/fmriLab/data/bids/sub-001/rest.feat`
+  - Now open the terminal, move to the `rest.feat` folder you just made: `cd ~/fmriLab/data/bids/derivatives/sub-001/func/rest.feat`
   - Note, this might not work if you didn't save rest.feat under sub-001, in that case you have to find our where you saved it.
   - Then run this command:
 `fslmaths filtered_func_data.nii.gz -bptf -1 2.5 filtered_func_data.nii.gz`
-- Here we are trying to do lowpass filtering of 0.08 hz. the -bptf option expects a high-pass sigma and a low-pass sigma, which can be caluclated by
- - highpass_sigma = 1 / (2 * TR * HP_freq). Here we use "-1" because we already highpassed the data.
- - lowpass_sigma = 1 / (2 * TR * LP_freq)). Remember TR is 2s.
-- Use fsleys to look at the output.
+- Here we are doing lowpass filtering of 0.08 hz. 
+    - the `-bptf` option expects a high-pass sigma and a low-pass sigma, which can be caluclated by
+    - `highpass_sigma = 1 / (2 * TR * HP_freq)` (we use "-1" because we already highpassed the data)
+    - `lowpass_sigma = 1 / (2 * TR * LP_freq))` (remember TR is 2s)
+    - Use fsleys to look at how the low-pass filter changes the timeseries
 
 
 ## Step 2. Extract the seed time-series
-- Go to preprocessed output folder
- - `cd ~/fmriLab/data/bids/sub-001/rest.feat/`
+- Stay in the preprocessed output folder `~/fmriLab/data/bids/derivatives/sub-001/func/rest.feat/`
 - Use fsleyes to open up the preprocessed structural image
   - `file`, `add from file`, goto `reg`, select `highres`
-- Add the filtered_func_data, use it as overlay. Use the skills you learned from the previous section to play around with opacity and color. Make sure they are nicely aligned.
-- Let us navigate to the right motor cortex. At the location tab in the bottom, enter the following x y z coordinate: \
+- Add the `filtered_func_data`, use it as underlay (place as a layer underneath the highres). Use the skills you learned from the previous section to play around with opacity and color. Make sure they are nicely aligned.
+- Let us navigate to the right motor cortex. At the location tab in the bottom, enter the following x y z coordinate for scanner anatomical space: \
 x=34 (top row), y=-12 (middle row), z=24 (lower row)
-![](Data/fsleye1.png)
-![](Data/fsleye2.png)
-- In the Overlay list panel, select filtered_func_data, write down the "voxel location" Which should be  21 32 26
-![](Data/fsleye3.png)
+- In the Overlay list panel, select filtered_func_data image, write down the "voxel location" coordinates which should be  21 32 26
+![](images/practical-rsfc_rmot-cross.png)
+![](images/practical-rsfc_rmot-coords.png)
+
+
 - We will now create an ROI mask around that coordinate. In the terminal, do
   - `fslmaths filtered_func_data.nii.gz -mul 0 -add 1 -roi 21 1 32 1 26 1 0 1 right_motor -odt float`
   - `fslmaths filtered_func_data.nii.gz -mul 0 -add 1 -roi 37 1 27 1 16 1 0 1 left_LGN -odt float`
